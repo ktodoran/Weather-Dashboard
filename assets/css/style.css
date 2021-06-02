@@ -20,6 +20,6 @@ span{
     font-size: 1em;
 }
 li:hover{
-    background-color: lightslategray;
+    background-color: red;
     text-decoration: underline;
 }

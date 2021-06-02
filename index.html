@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>What's the Weather?</title>
     <!--Bootstrap CSS CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
     <!-- Font Awesome CSS Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <!--My CSS File-->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>What's the Weather?</title>
 </head>
 <body>
 <!--Jumbotron for Title-->
@@ -18,12 +18,12 @@
     <h1> <strong>Weather Dashboard</strong></h1>
   </div>
   <div class="container">
-<!--Row for searching a city-->
+<!--Row for City-->
   <div class="row">
     <div class="col-sm-4"></div>        
-<!--Here we create an HTML form for handling the inputs-->                
+<!--HTML Handler for inputs-->                
     <h4 class="pt-1"><strong>Search for a City:</strong></h4>
-<!--Here we create the text box for capturing the search city Name-->                
+<!--Input for City Name-->                
     <div class="input-group mb-3">
       <input type="text" class="form-control"id="search-city" aria-label="City Search" aria-describedby="search-button">
      <div class="input-group-append">
@@ -44,7 +44,7 @@
          <p>UV index:<span class="current bg-danger rounded py-2 px-2 text-white" id="uv-index"></span></p> 
        </div>
       </div>
-<!--Row for future data to be dumped here-->                
+<!--Row for Future Data-->                
      <div class="col-sm-12" id ="future-weather">
        <h3>5-Day Forecast:</h3>
       <div class="row text-light">
@@ -87,6 +87,6 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <!--Code to Javascript File-->
-  <script src="script.js"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
