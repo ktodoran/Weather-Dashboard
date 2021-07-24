@@ -1,9 +1,9 @@
 Foundation.addToJquery($);
 //initial city information to display display
-var cityElem = "Indianapolis";
+var cityElem = "Fort Wayne";
 //variable to prevent the initial page load search from showing up in recent searches (skip first run)
 var queries = 0;
-//load local storage items or set equal to empty array if nothing in localstorage
+//load local storage items or set equal to empty array if nothing in localStorage
 var searchedItemsArr = JSON.parse(localStorage.getItem("cities")) || [];
 
 //Search city on user input
