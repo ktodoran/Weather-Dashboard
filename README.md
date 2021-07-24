@@ -13,7 +13,7 @@
 * Google Fonts
 
 ## Preview of Project
-<img src="./assets/images/ScreenshotofProject.jpg" alt="Weather Hub Screenshot" />
+<img src="images/ScreenshotofProject.jpg" alt="Weather Hub Screenshot" />
 
 ## Functionality
 * A user may input a city they'd like to view the weather for and current as well as future weather will be displayed to them.
