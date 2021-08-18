@@ -1,86 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Import Foundation CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
-    integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
-  <!--Import personal style sheet-->
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <!--Favicon-->
-  <link rel="icon" type="image/png" href="./assets/images/windsock-duotone-favicon.svg" />
-  <title>Weather Hub</title>
+  <title>Weather Dashboard</title>
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!--Link to style.css-->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
-
 <body>
-  <div class="grid-y medium-auto grid-padding-x">
-    <!--Header-->
-    <div class="cell shrink header medium-cell-block-container text-center"
-      style="background-color: #3f3855; color: white;">
-      <h1>Weather Hub</h1>
+  <!--Weather Dashboard Header/Navbar-->
+  <nav class="navbar navbar-dark bg-primary">
+    <div class="col-sm-12">
+      <h1 class="text-white text-center">Weather Hub</h1>
     </div>
-    <!--Main Body Section-->
-    <div class="cell medium-auto">
-      <!--Left Content Section-->
-      <div class="grid-x">
-        <div class="cell medium-2 medium-cell-block-y" style="margin-top: 10px;">
-          <h3 class="shrink" style="color: white;">Search for a City:</h3>
-          <input type="text" placeholder="Fort Wayne" id="user-search">
-          <div class="stacked button-group">
-            <button type="submit" class="button success" id="search-city">Search</button>
-          </div>
-          <hr style="border: 1px solid white;" />
-          <h5 style="color: white;">Recent Searches:</h5>
-          <button type="button" class="button small alert" id="clear-searches">Clear Searches</button>
-          <div class="stacked button-group recent-searches" id="recent-searches">
+  </nav>
+  <main>
+    <!--Creates Overall Grid-->
+    <div class="container">
+      <div class="row">
+        <!--Begin Search for a City-->
+        <div class="col-sm-4" id="searchSection">
+          <form class="form-inline" id="search">
+            <div id="title">Search for a City:</div>
+            <input class="form-control" id="searchedCity" type="search" placeholder="San Diego" aria-label="Search">
+            <button class="btn btn-primary text-white text-center" type="submit" id="searchBtn">Search</button>
+          </form>
+          <!--To Save previous city searches (utilize local storage)-->
+          <div id="saveCities">
           </div>
         </div>
-
-        <!--Main Content Section-->
-        <div class="cell medium-9 ">
-          <div class="card" style="margin: 20px -35px 20px 30px; padding: 10px;" id="current-weather">
+        <!--Begin Current City Real Time Search Results-->
+        <div class="col-sm-8">
+          <!--Creating a row within a column-->
+          <div class="row">
+            <div class="col-sm-12"></div>
+            <div class="card">
+              <div class="card-body">
+                <h2 id="selectedCity"></h2>
+                <div id="selectedCityResults"></div>
+              </div>
+            </div>
           </div>
-          <!--Daily Weather Information-->
-          <h3 style="margin-left: 30px; color: white;" id="five-day">5-Day Forecast:</h3>
-          <div class="grid-x small-up-1 medium-up-5" id="daily-weather" style="margin-right: -35px;">
+          <!--Staying within the row within the col-sm-8 to keep the cards under the featured city-->
+          <div class="col-sm-12" id="fiveDayForcast">
+            <h3>5-Day Forcast:</h3>
+            <div class="card-deck" id="fiveDayForcastCards"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
+  <!--Links to jQuery-->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-  <!--failed to enter city modal-->
-  <div class="tiny reveal" id="enter-city-modal" data-reveal>
-    <h4>Please enter a city to retrieve weather data.</h4>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <!--Links to Moment-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-  <!--failed to get api information modal-->
-  <div class="tiny reveal" id="api-failure-modal" data-reveal>
-    <h4>Oops. It seems that city doesn't exist in our database. Please check your spelling and try again.</h4>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <!-- Import JQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!-- Import Foundation JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
-    integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
-  <!--Import Moment-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <!--Import Personal Scripts-->
-  <script src="assets/js/weather.js"></script>
+  <!--Links to JavaScript File-->
+  <script src="assets/js/script.js"></script>
 </body>
 
 </html>
