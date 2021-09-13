@@ -1,6 +1,5 @@
 $(document).ready(function () {
     // Global Variables
-
     // API key
     var APIKey = "2e7106f9963865fdfaacade04c8a3b8e";
 
@@ -8,11 +7,9 @@ $(document).ready(function () {
     var citiesForm = document.querySelector("#citiesForm");
     var citiesList = document.querySelector("#citiesList");
     var citiesCountSpan = document.querySelector("#citiesCount");
-    var cityEntered = "";
+    var cityEntered = "Indianapolis";
     var lastSearched = "";
-
     var idValue = "";
-
     var cities = [];
 
     // retrieve today's date using moment and format for output
@@ -232,18 +229,18 @@ $(document).ready(function () {
                     $(idValue).text(forecastDate);
 
                     // Next is the weather forecast icon
-                    idValue = "#fcstimage" + parseInt(counter);
-                    var fcstIcon = $(idValue).attr(
+                    idValue = "#forecastimage" + parseInt(counter);
+                    var forecastIcon = $(idValue).attr(
                         "src",
                         "https://openweathermap.org/img/w/" +
                         onecallapiResult.daily[j].weather[0].icon +
                         ".png"
                     );
-                    fcstIcon = $(idValue).addClass("card-img-top");
-                    console.log("fcstIcon " + fcstIcon);
-                    $(idValue).append(fcstIcon);
+                    forecastIcon = $(idValue).addClass("card-img-top");
+                    console.log("forecastIcon " + forecastIcon);
+                    $(idValue).append(forecastIcon);
 
-                    idValue = "#fcsthumidity" + parseInt(counter);
+                    idValue = "#forecasthumidity" + parseInt(counter);
                     $(idValue).text("Humidity: " + onecallapiResult.daily[j].humidity);
 
                     // Convert the temp to fahrenheit
@@ -252,7 +249,7 @@ $(document).ready(function () {
                     // add temp content to html
                     $("#temp").text("Temperature (K) " + onecallapiResult.daily[j].temp);
 
-                    idValue = "#fcsttemp" + parseInt(counter);
+                    idValue = "#forecasttemp" + parseInt(counter);
 
                     $(idValue).text("Temperature (F) " + tempF.toFixed(2));
 
