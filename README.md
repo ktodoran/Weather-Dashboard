@@ -24,4 +24,4 @@
 
 ## Access the Project
 * Github repository available [here](https://github.com/ktodoran/weather-hub)
-* Live web page available at [https://ktodoran.github.io/weather-hub/](https://ktodoran.github.io/weather-hub/)
+* Live web page available at [https://ktodoran.github.io/Weather-Hub/](https://ktodoran.github.io/Weather-Hub/)

@@ -1,66 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather Dashboard</title>
-  <!-- Bootstrap CDN -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <!--Link to style.css-->
-  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <title>Weather Hub</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"
+    integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
+
 <body>
-  <!--Weather Dashboard Header/Navbar-->
-  <nav class="navbar navbar-dark bg-primary">
-    <div class="col-sm-12">
-      <h1 class="text-white text-center">Weather Hub</h1>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <p class="text-white">Weather Hub</p>
+      </div>
     </div>
   </nav>
-  <main>
-    <!--Creates Overall Grid-->
-    <div class="container">
-      <div class="row">
-        <!--Begin Search for a City-->
-        <div class="col-sm-4" id="searchSection">
-          <form class="form-inline" id="search">
-            <div id="title">Search for a City:</div>
-            <input class="form-control" id="searchedCity" type="search" placeholder="San Diego" aria-label="Search">
-            <button class="btn btn-primary text-white text-center" type="submit" id="searchBtn">Search</button>
+
+  <div class="container-fluid text-center">
+    <div class="row content">
+      <div class="col-sm-2 sidenav">
+        <div>
+          <form id="citiesForm" method="POST">
+            <label for="citiesText">Search for a City</label>
+            <input type="text" placeholder="Search for A City?" name="citiesText" id="citiesText" />
           </form>
-          <!--To Save previous city searches (utilize local storage)-->
-          <div id="saveCities">
+
+          <form id="citiesHistory" method="POST">
+            <p>Cities: <span id="citiesCount"></span></p>
+            <ul class="nav nav-pills nav-stacked citylistClass" id="citiesList"></ul>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-sm-10 text-left">
+        <div class="card" id="todaycard">
+          <div class="row row-horizon">
+            <h2 id="cardtitle" class="card-title"><strong></strong></h2>
+            <img id="cardimage" alt="Card image cap" />
+          </div>
+          <div class="card-body">
+            <p id="tempF" class="card-text"></p>
+            <p id="humidity" class="card-text"></p>
+            <p id="wind" class="card-text"></p>
+            <p class="card-text">
+              <span>UV Index:</span><span id="uvindex" class="card-text"></span>
+            </p>
           </div>
         </div>
-        <!--Begin Current City Real Time Search Results-->
-        <div class="col-sm-8">
-          <!--Creating a row within a column-->
-          <div class="row">
-            <div class="col-sm-12"></div>
-            <div class="card">
+
+        <div><strong>5-Day Forecast</strong></div>
+
+        <div class="row row-horizon" id="fcstsection">
+          <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h2 id="selectedCity"></h2>
-                <div id="selectedCityResults"></div>
+                <h5 class="card-title" id="fcstdate0"></h5>
+                <p class="card-text">
+                  <img id="fcstimage0" alt="Card image cap" />
+                </p>
+                <p class="card-text" id="fcsttemp0"></p>
+                <p class="card-text" id="fcsthumidity0"></p>
               </div>
             </div>
           </div>
-          <!--Staying within the row within the col-sm-8 to keep the cards under the featured city-->
-          <div class="col-sm-12" id="fiveDayForcast">
-            <h3>5-Day Forcast:</h3>
-            <div class="card-deck" id="fiveDayForcastCards"></div>
+          <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-body">
+                <h5 class="card-title" id="fcstdate1"></h5>
+                <p class="card-text">
+                  <img id="fcstimage1" alt="Card image cap" />
+                </p>
+                <p class="card-text" id="fcsttemp1"></p>
+                <p class="card-text" id="fcsthumidity1"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-body">
+                <h5 class="card-title" id="fcstdate2"></h5>
+                <p class="card-text">
+                  <img id="fcstimage2" alt="Card image cap" />
+                </p>
+                <p class="card-text" id="fcsttemp2"></p>
+                <p class="card-text" id="fcsthumidity2"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-body">
+                <h5 class="card-title" id="fcstdate3"></h5>
+                <p class="card-text">
+                  <img id="fcstimage3" alt="Card image cap" />
+                </p>
+                <p class="card-text" id="fcsttemp3"></p>
+                <p class="card-text" id="fcsthumidity3"></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="card text-white bg-primary mb-3">
+              <div class="card-body">
+                <h5 class="card-title" id="fcstdate4"></h5>
+                <p class="card-text">
+                  <img id="fcstimage4" alt="Card image cap" />
+                </p>
+                <p class="card-text" id="fcsttemp4"></p>
+                <p class="card-text" id="fcsthumidity4"></p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </main>
-  <!--Links to jQuery-->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  </div>
 
-  <!--Links to Moment-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-
-  <!--Links to JavaScript File-->
-  <script src="assets/js/script.js"></script>
+  <footer class="container-fluid text-center">
+    <p>Weather Data provided through OpenWeatherMap API</p>
+  </footer>
+  <script type="text/javascript" src="assets/javascript/script.js"></script>
 </body>
 
 </html>

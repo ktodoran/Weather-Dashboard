@@ -1,85 +1,128 @@
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap');
-
-*{
-    font-family: 'Merriweather', sans-serif !important;
-    font-weight: 700 !important;
+navbar {
+	margin-bottom: 0;
+	border-radius: 0;
 }
 
-body{
-    background-image: radial-gradient(rgba(126,145,192,1), black 200%);
-    background-size: cover;
-    background-position: 70%;
-    background-attachment: fixed;
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 450px;
 }
 
-#current-weather, #daily-weather .card{
-    background-color: #886fac;
-    border-color: #d4cae2;
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #f1f1f1;
+	height: 100%;
 }
 
-.is-low{
-    padding: 0 5px;
-    background-color: green;
-    color: white;
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
 }
 
-.is-moderate{
-    padding: 0 5px;
-    background-color: yellow;
-    color: black;
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
 }
 
-.is-high{
-    padding: 0 5px;
-    background-color: orange;
-    color: black;
+body {
+	font-family: "Concert One", cursive;
+	font-size: 16px;
 }
 
-.is-very-high{
-    padding: 0 5px;
-    background-color: red;
-    color: white;
+input {
+	height: 50px;
+	width: 100%;
+	padding: 6px;
+	margin-top: 10px;
+	font-size: 2.4em;
+	border: none;
 }
 
-@media screen and (max-width: 1300px) {
-    
-    #daily-weather h4{
-        font-size: 1.5em !important;
-    }
-
-    #daily-weather{
-        font-size: 0.80em !important;
-    } 
+ul {
+	list-style-type: none;
+	padding: 0;
+	background-color: white;
 }
 
-@media screen and (max-width: 1050px) {
-    
-    #daily-weather h4{
-        font-size: 1.4em !important;
-    }
-
-    #daily-weather{
-        font-size: 0.75em !important;
-    } 
+li {
+	height: 50px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	padding: 5px;
+	background-color: #ff5d88;
+	color: white;
+	font-size: 1.5em;
+	line-height: 1.5;
 }
 
-@media screen and (max-width: 575px) {
+li:before {
+	content: "\200B";
+	position: absolute;
+}
 
-    #daily-weather h4{
-        font-size: 120% !important;
-    }
+li::after {
+	content: " ";
+	display: block;
+	clear: both;
+}
 
-    #daily-weather{
-        font-size: 100% !important;
-    } 
+li button {
+	float: right;
+	border: none;
+	height: 40px;
+	cursor: pointer;
+	background-color: #ff5d88;
+	color: white;
+	font-size: 1em;
+}
 
-    #current-weather, #five-day{
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-    }
+li button:hover {
+	background-color: #febc5d;
+}
 
-    #daily-weather .card{
-        margin: 10px 45px 10px 10px !important;
-    }
-    
+.cities {
+	width: 200px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+
+.bg-red {
+	background-color: rgb(255, 1, 1);
+}
+.bg-green {
+	background-color: rgba(8, 131, 8, 0.788);
+}
+
+.bg-gray {
+	background-color: #cfdce9da;
+}
+.bg-yellow {
+	background-color: #ff9500;
+}
+
+h2 {
+	display: inline-block;
+	margin-left: 15px;
+}
+
+#todaycard {
+	border-style: ridge;
+}
+.citylistClass {
+	height: 300px;
+	overflow-y: scroll;
 }
