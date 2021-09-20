@@ -28,94 +28,94 @@
     <div class="row content">
       <div class="col-sm-2 sidenav">
         <div>
-          <form id="citiesForm" method="POST">
-            <label for="citiesText">Search for a City</label>
-            <input type="text" placeholder="Indianapolis" name="citiesText" id="citiesText" />
+          <form id="cityForm" method="POST">
+            <label for="citySearch">Search for a City</label>
+            <input type="text" placeholder="Indianapolis" name="citySearch" id="citySearch" />
           </form>
 
-          <form id="citiesHistory" method="POST">
-            <p>Cities: <span id="citiesCount"></span></p>
-            <ul class="nav nav-pills nav-stacked citylistClass" id="citiesList"></ul>
+          <form id="cityPast" method="POST">
+            <p>Cities: <span id="citySpanCount"></span></p>
+            <ul class="nav nav-pills nav-stacked cityList" id="cityList"></ul>
           </form>
         </div>
       </div>
 
       <div class="col-sm-10 text-left">
-        <div class="card" id="todaycard">
+        <div class="card" id="currentCard">
           <div class="row row-horizon">
-            <h2 id="cardtitle" class="card-title"><strong></strong></h2>
-            <img id="cardimage" alt="Card image cap" />
+            <h2 id="title" class="card-title"><strong></strong></h2>
+            <img id="cardImage" alt="Card image cap" />
           </div>
           <div class="card-body">
             <p id="tempF" class="card-text"></p>
             <p id="humidity" class="card-text"></p>
             <p id="wind" class="card-text"></p>
             <p class="card-text">
-              <span>UV Index:</span><span id="uvindex" class="card-text"></span>
+              <span>UV Index:</span><span id="UVIndex" class="card-text"></span>
             </p>
           </div>
         </div>
 
         <div><strong>5-Day Forecast</strong></div>
 
-        <div class="row row-horizon" id="forecastsection">
+        <div class="row row-horizon" id="forecastSection">
           <div class="col-md-2">
             <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h5 class="card-title" id="forecastdate0"></h5>
+                <h5 class="card-title" id="date0"></h5>
                 <p class="card-text">
-                  <img id="forecastimage0" alt="Card image cap" />
+                  <img id="image0" alt="Card image cap" />
                 </p>
-                <p class="card-text" id="forecasttemp0"></p>
-                <p class="card-text" id="forecasthumidity0"></p>
+                <p class="card-text" id="foreTemp0"></p>
+                <p class="card-text" id="humidity0"></p>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h5 class="card-title" id="forecastdate1"></h5>
+                <h5 class="card-title" id="date1"></h5>
                 <p class="card-text">
-                  <img id="forecastimage1" alt="Card image cap" />
+                  <img id="image1" alt="Card image cap" />
                 </p>
-                <p class="card-text" id="forecasttemp1"></p>
-                <p class="card-text" id="forecasthumidity1"></p>
+                <p class="card-text" id="foreTemp1"></p>
+                <p class="card-text" id="humidity1"></p>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h5 class="card-title" id="forecastdate2"></h5>
+                <h5 class="card-title" id="date2"></h5>
                 <p class="card-text">
-                  <img id="forecastimage2" alt="Card image cap" />
+                  <img id="image2" alt="Card image cap" />
                 </p>
-                <p class="card-text" id="forecasttemp2"></p>
-                <p class="card-text" id="forecasthumidity2"></p>
+                <p class="card-text" id="foreTemp2"></p>
+                <p class="card-text" id="humidity2"></p>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h5 class="card-title" id="forecastdate3"></h5>
+                <h5 class="card-title" id="date3"></h5>
                 <p class="card-text">
-                  <img id="forecastimage3" alt="Card image cap" />
+                  <img id="image3" alt="Card image cap" />
                 </p>
-                <p class="card-text" id="forecasttemp3"></p>
-                <p class="card-text" id="forecasthumidity3"></p>
+                <p class="card-text" id="foreTemp3"></p>
+                <p class="card-text" id="humidity3"></p>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="card text-white bg-primary mb-3">
               <div class="card-body">
-                <h5 class="card-title" id="forecastdate4"></h5>
+                <h5 class="card-title" id="date4"></h5>
                 <p class="card-text">
-                  <img id="forecastimage4" alt="Card image cap" />
+                  <img id="image4" alt="Card image cap" />
                 </p>
-                <p class="card-text" id="forecasttemp4"></p>
-                <p class="card-text" id="forecasthumidity4"></p>
+                <p class="card-text" id="foreTemp4"></p>
+                <p class="card-text" id="humidity4"></p>
               </div>
             </div>
           </div>

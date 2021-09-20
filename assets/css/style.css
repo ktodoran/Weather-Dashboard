@@ -119,10 +119,10 @@ h2 {
 	margin-left: 15px;
 }
 
-#todaycard {
+#currentCard {
 	border-style: ridge;
 }
-.citylistClass {
+.cityList {
 	height: 300px;
 	overflow-y: scroll;
 }

@@ -1,19 +1,14 @@
 $(document).ready(function () {
-    // Global Variables
-    // API key
     var APIKey = "2e7106f9963865fdfaacade04c8a3b8e";
-
-    var citiesInput = document.querySelector("#citiesText");
-    var citiesForm = document.querySelector("#citiesForm");
-    var citiesList = document.querySelector("#citiesList");
-    var citiesCountSpan = document.querySelector("#citiesCount");
-    var cityEntered = "Indianapolis";
-    var lastSearched = "";
+    var citiesInput = document.querySelector("#citySearch");
+    var citiesForm = document.querySelector("#cityForm");
+    var citiesList = document.querySelector("#cityList");
+    var citiesCountSpan = document.querySelector("#citySpanCount");
+    var cityWanted = "Fort Wayne";
+    var previousSearch = "";
     var idValue = "";
-    var cities = [];
-
-    
-    var today = moment().format("MMMM Do YYYY");
+    var cities = [];    
+    var rightNow = moment().format("MMMM Do YYYY");
 
  
     init();
@@ -27,13 +22,13 @@ $(document).ready(function () {
 
       
         for (var i = 0; i < cities.length; i++) {
-            var cityName = cities[i];
+            var city = cities[i];
 
             var li = document.createElement("li");
-            li.setAttribute("data-city", cityName);
+            li.setAttribute("data-city", city);
 
             var button = document.createElement("button");
-            button.textContent = cityName;
+            button.textContent = city;
             li.appendChild(button);
             citiesList.appendChild(li);
         }
@@ -41,17 +36,17 @@ $(document).ready(function () {
         storeCities();
     }
 
-    citiesHistory.addEventListener("click", function (event) {
+    cityPast.addEventListener("click", function (event) {
         event.preventDefault();
 
         var element = event.target;
         console.log(element); ``
 
         if (element.matches("button") === true) {
-            var citySelected = element.parentElement.getAttribute("data-city");
-            console.log(citySelected);
+            var citySearched = element.parentElement.getAttribute("data-city");
+            console.log(citySearched);
 
-            cityEntered = citySelected;
+            cityWanted = citySearched;
             getWeather();
 
             renderCities();
@@ -72,8 +67,8 @@ $(document).ready(function () {
         }
 
         citiesInput.value = "";
-        cityEntered = citiesText;
-        lastSearched = citiesText;
+        cityWanted = citiesText;
+        previousSearch = citiesText;
 
         getWeather();
 
@@ -81,11 +76,11 @@ $(document).ready(function () {
     });
 
     function getWeather() {
-        console.log(cityEntered);
+        console.log(cityWanted);
 
-        var searchCity = cityEntered;
+        var searchCity = cityWanted;
 
-        console.log("This is the value of Search City" + searchCity);
+        console.log("This is the information for" + searchCity);
         var queryURL =
             "https://api.openweathermap.org/data/2.5/weather?q=" +
             searchCity +
@@ -100,12 +95,11 @@ $(document).ready(function () {
         })
             .then(function (apiResult) {
                 $("col-sm-10 text-left");
-
                 console.log(apiResult);
 
-                var cityName = apiResult.name;
-                cityName = cityName + " (" + today + ") ";
-                $("#cardtitle").text(cityName);
+                var city = apiResult.name;
+                city = city + " (" + rightNow + ") ";
+                $("#title").text(city);
 
                 $("#wind").text("Wind Speed: " + apiResult.wind.speed);
                 $("#humidity").text("Humidity: " + apiResult.main.humidity);
@@ -120,15 +114,15 @@ $(document).ready(function () {
                     .text(tempF.toFixed(2) + " Temperature (F)");
                 console.log("tempDiv " + tempDiv);
 
-                var newIcon = $("#cardimage").attr(
+                var newIcon = $("#cardImage").attr(
                     "src",
                     "https://openweathermap.org/img/w/" +
                     apiResult.weather[0].icon +
                     ".png"
                 );
-                newIcon = $("#cardimage").addClass("card-img-top");
+                newIcon = $("#cardImage").addClass("card-img-top");
                 console.log("newIcon " + newIcon);
-                $("#cardimage").append(newIcon);
+                $("#cardImage").append(newIcon);
 
                 getUVIndex(apiResult);
             });
@@ -138,7 +132,7 @@ $(document).ready(function () {
         console.log(apiResult);
         var savedResult = apiResult;
 
-        console.log("Saved Variable Results passed to getUVINdex" + savedResult);
+        console.log("Saved Variable Results passed to getUVIndex" + savedResult);
         console.log("Try for LAT:" + apiResult.coord.lat);
         console.log("Try for LON:" + apiResult.coord.lon);
 
@@ -152,7 +146,7 @@ $(document).ready(function () {
 
         console.log("URL With LAT & LON" + uvQueryRL);
 
-        $.ajax({
+        $.aiax({
             url: uvQueryRL,
             method: "GET",
         })
@@ -160,61 +154,61 @@ $(document).ready(function () {
    
                 console.log(oneAPIResult);
 
-                $("#uvindex").text(oneAPIResult.current.uvi);
+                $("#UVIndex").text(oneAPIResult.current.uvi);
 
                 if (oneAPIResult.current.uvi < 2) {
-                    $("#uvindex").addClass("bg-green");
+                    $("#UVIndex").addClass("bg-green");
                 }
 
                 if (
                     oneAPIResult.current.uvi >= 2.01 &&
                     oneAPIResult.current.uvi <= 5.0
                 ) {
-                    $("#uvindex").addClass("bg-yellow");
+                    $("#UVIndex").addClass("bg-yellow");
                 }
 
                 if (oneAPIResult.current.uvi >= 5.01) {
-                    $("#uvindex").addClass("bg-red");
+                    $("#UVIndex").addClass("bg-red");
                 }
 
                 console.log("UV Index: " + oneAPIResult.current.uvi);
 
-                for (let j = 0; j < 5; j++) {
-                    const looper = oneAPIResult.daily[j];
+                for (let i = 0; i < 5; i++) {
+                    const looper = oneAPIResult.daily[i];
                     var counter = 0;
 
-                    counter = j;
-                    console.log("Counter value (J): " + counter);
+                    counter = i;
+                    console.log("Counter value (i): " + counter);
 
                     // Forecast Date
-                    var today = moment().format("MMMM Do YYYY");
+                    var rightNow = moment().format("MMMM Do YYYY");
                     var forecastDate = moment()
                         .add(counter + 1, "days")
                         .format("MMMM Do YYYY");
 
-                    idValue = "#forecastDate" + parseInt(counter);
+                    idValue = "#date" + parseInt(counter);
                     console.log("Forecast id and date= " + forecastDate + "ID= " + idValue);
                     $(idValue).text(forecastDate);
 
-                    idValue = "#forecastimage" + parseInt(counter);
+                    idValue = "#image" + parseInt(counter);
                     var forecastIcon = $(idValue).attr(
                         "src",
                         "https://openweathermap.org/img/w/" +
-                        oneAPIResult.daily[j].weather[0].icon +
+                        oneAPIResult.daily[i].weather[0].icon +
                         ".png"
                     );
                     forecastIcon = $(idValue).addClass("card-img-top");
                     console.log("forecastIcon " + forecastIcon);
                     $(idValue).append(forecastIcon);
 
-                    idValue = "#forecasthumidity" + parseInt(counter);
-                    $(idValue).text("Humidity: " + oneAPIResult.daily[j].humidity);
+                    idValue = "#humidity" + parseInt(counter);
+                    $(idValue).text("Humidity: " + oneAPIResult.daily[i].humidity);
 
-                    var tempF = (oneAPIResult.daily[j].temp.day - 273.15) * 1.8 + 32;
+                    var tempF = (oneAPIResult.daily[i].temp.day - 273.15) * 1.8 + 32;
 
-                    $("#temp").text("Temperature (K) " + oneAPIResult.daily[j].temp);
+                    $("#temp").text("Temperature (K) " + oneAPIResult.daily[i].temp);
 
-                    idValue = "#forecasttemp" + parseInt(counter);
+                    idValue = "#foreTemp" + parseInt(counter);
 
                     $(idValue).text("Temperature (F) " + tempF.toFixed(2));
 
@@ -228,13 +222,13 @@ $(document).ready(function () {
 
     function init() {
 
-        var storedCities = JSON.parse(localStorage.getItem("storedCities"));
+        var storedCities = iSON.parse(localStorage.getItem("storedCities"));
 
         if (storedCities !== null) {
             cities = storedCities;
 
-            lastSearched = JSON.parse(localStorage.getItem("lastCity"));
-            cityEntered = lastSearched;
+            previousSearch = iSON.parse(localStorage.getItem("lastCity"));
+            cityWanted = previousSearch;
 
             getWeather();
         }
@@ -242,7 +236,7 @@ $(document).ready(function () {
 
     function storeCities() {
 
-        localStorage.setItem("storedCities", JSON.stringify(cities));
-        localStorage.setItem("lastCity", JSON.stringify(cityEntered));
+        localStorage.setItem("storedCities", iSON.stringify(cities));
+        localStorage.setItem("lastCity", iSON.stringify(cityWanted));
     }
 });
