@@ -12,20 +12,20 @@ $(document).ready(function () {
     var idValue = "";
     var cities = [];
 
-    // retrieve today's date using moment and format for output
+    
     var today = moment().format("MMMM Do YYYY");
 
-    // retrieve local storage
+ 
     init();
 
     renderCities();
 
     function renderCities() {
-        // Clear citiesList element and update citiesCountSpan
+     
         citiesList.innerHTML = "";
         citiesCountSpan.textContent = cities.length;
 
-        // Render a new li for each city
+      
         for (var i = 0; i < cities.length; i++) {
             var cityName = cities[i];
 
@@ -41,40 +41,31 @@ $(document).ready(function () {
         storeCities();
     }
 
-    // When an element inside of the City List is clicked...
     citiesHistory.addEventListener("click", function (event) {
         event.preventDefault();
 
         var element = event.target;
         console.log(element); ``
 
-        // If that element is a button...
         if (element.matches("button") === true) {
-            // Get its data value and display forecast for that City
             var citySelected = element.parentElement.getAttribute("data-city");
             console.log(citySelected);
 
-            // Call the function to retrieve the weather for the city entered in the search
             cityEntered = citySelected;
             getWeather();
 
-            // Re-render the list
             renderCities();
         }
     });
 
-    // When form is submitted for a newly searched City
     citiesForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
         var citiesText = citiesInput.value.trim();
 
-        // Return from function early if submitted citiesText is blank
         if (citiesText === "") {
             return;
         }
-
-        // Add new citiesText to cities array
 
         if (!cities.includes(citiesText)) {
             cities.push(citiesText);
@@ -84,10 +75,8 @@ $(document).ready(function () {
         cityEntered = citiesText;
         lastSearched = citiesText;
 
-        // Call the function to retrieve the weather for the city entered in the search
         getWeather();
 
-        // Re-render the list
         renderCities();
     });
 
@@ -97,29 +86,23 @@ $(document).ready(function () {
         var searchCity = cityEntered;
 
         console.log("This is the value of Search City" + searchCity);
-        // Here we are building the URL we need to query the database
         var queryURL =
             "https://api.openweathermap.org/data/2.5/weather?q=" +
             searchCity +
             "&appid=" +
             APIKey;
 
-        // Log the queryURL
         console.log(queryURL);
-        // Here we run our AJAX call to the OpenWeatherMap API
 
         $.ajax({
             url: queryURL,
             method: "GET",
         })
-            // Store all of the retrieved data in object called "apiResult"
             .then(function (apiResult) {
                 $("col-sm-10 text-left");
 
-                // Log the resulting object
                 console.log(apiResult);
 
-                // Transfer content to HTML
                 var cityName = apiResult.name;
                 cityName = cityName + " (" + today + ") ";
                 $("#cardtitle").text(cityName);
@@ -127,19 +110,16 @@ $(document).ready(function () {
                 $("#wind").text("Wind Speed: " + apiResult.wind.speed);
                 $("#humidity").text("Humidity: " + apiResult.main.humidity);
 
-                // Convert the temp to fahrenheit
                 var tempF = (apiResult.main.temp - 273.15) * 1.8 + 32;
 
-                // add temp content to html
                 $("#temp").text("Temperature (K) " + apiResult.main.temp);
                 $("#tempF").text("Temperature (F) " + tempF.toFixed(2));
 
-                var tempFdiv = $("<div>")
+                var tempDiv = $("<div>")
                     .addClass("tempF")
                     .text(tempF.toFixed(2) + " Temperature (F)");
-                console.log("tempFdiv " + tempFdiv);
+                console.log("tempDiv " + tempDiv);
 
-                // Build and display the icon
                 var newIcon = $("#cardimage").attr(
                     "src",
                     "https://openweathermap.org/img/w/" +
@@ -150,21 +130,18 @@ $(document).ready(function () {
                 console.log("newIcon " + newIcon);
                 $("#cardimage").append(newIcon);
 
-                // Use the latitude and longitude to get the UV Index
                 getUVIndex(apiResult);
             });
     }
 
     function getUVIndex(apiResult) {
         console.log(apiResult);
-        // Same API Key for latitude longitude
         var savedResult = apiResult;
 
         console.log("Saved Variable Results passed to getUVINdex" + savedResult);
         console.log("Try for LAT:" + apiResult.coord.lat);
         console.log("Try for LON:" + apiResult.coord.lon);
 
-        // Here we are building the URL we need to query the database with lattitude and longitude
         var uvQueryRL =
             "https://api.openweathermap.org/data/2.5/onecall?lat=" +
             apiResult.coord.lat +
@@ -173,50 +150,41 @@ $(document).ready(function () {
             "&exclude=hourly,minutely&appid=" +
             APIKey;
 
-        // Log the queryURL
         console.log("URL With LAT & LON" + uvQueryRL);
 
-        // AJAX call to the OpenWeatherMap OneCall API
         $.ajax({
             url: uvQueryRL,
             method: "GET",
         })
-            // Returned data stored in an object we are calling "onecallapiResult"
-            .then(function (onecallapiResult) {
-                // Log the resulting object
-                console.log(onecallapiResult);
+            .then(function (oneAPIResult) {
+   
+                console.log(oneAPIResult);
 
-                // Add the UVindex to the HTML
-                $("#uvindex").text(onecallapiResult.current.uvi);
+                $("#uvindex").text(oneAPIResult.current.uvi);
 
-                //  check value and colorize according to requirement
-                if (onecallapiResult.current.uvi < 2) {
+                if (oneAPIResult.current.uvi < 2) {
                     $("#uvindex").addClass("bg-green");
                 }
 
                 if (
-                    onecallapiResult.current.uvi >= 2.01 &&
-                    onecallapiResult.current.uvi <= 5.0
+                    oneAPIResult.current.uvi >= 2.01 &&
+                    oneAPIResult.current.uvi <= 5.0
                 ) {
                     $("#uvindex").addClass("bg-yellow");
                 }
 
-                if (onecallapiResult.current.uvi >= 5.01) {
+                if (oneAPIResult.current.uvi >= 5.01) {
                     $("#uvindex").addClass("bg-red");
                 }
 
-                // Log the data in the console as well
-                console.log("UV Index: " + onecallapiResult.current.uvi);
+                console.log("UV Index: " + oneAPIResult.current.uvi);
 
-                // Now loop through the forecast array and display five days of forecast
                 for (let j = 0; j < 5; j++) {
-                    const looper = onecallapiResult.daily[j];
+                    const looper = oneAPIResult.daily[j];
                     var counter = 0;
 
                     counter = j;
                     console.log("Counter value (J): " + counter);
-
-                    // Build the card html
 
                     // Forecast Date
                     var today = moment().format("MMMM Do YYYY");
@@ -228,12 +196,11 @@ $(document).ready(function () {
                     console.log("Forecast id and date= " + forecastDate + "ID= " + idValue);
                     $(idValue).text(forecastDate);
 
-                    // Next is the weather forecast icon
                     idValue = "#forecastimage" + parseInt(counter);
                     var forecastIcon = $(idValue).attr(
                         "src",
                         "https://openweathermap.org/img/w/" +
-                        onecallapiResult.daily[j].weather[0].icon +
+                        oneAPIResult.daily[j].weather[0].icon +
                         ".png"
                     );
                     forecastIcon = $(idValue).addClass("card-img-top");
@@ -241,32 +208,28 @@ $(document).ready(function () {
                     $(idValue).append(forecastIcon);
 
                     idValue = "#forecasthumidity" + parseInt(counter);
-                    $(idValue).text("Humidity: " + onecallapiResult.daily[j].humidity);
+                    $(idValue).text("Humidity: " + oneAPIResult.daily[j].humidity);
 
-                    // Convert the temp to fahrenheit
-                    var tempF = (onecallapiResult.daily[j].temp.day - 273.15) * 1.8 + 32;
+                    var tempF = (oneAPIResult.daily[j].temp.day - 273.15) * 1.8 + 32;
 
-                    // add temp content to html
-                    $("#temp").text("Temperature (K) " + onecallapiResult.daily[j].temp);
+                    $("#temp").text("Temperature (K) " + oneAPIResult.daily[j].temp);
 
                     idValue = "#forecasttemp" + parseInt(counter);
 
                     $(idValue).text("Temperature (F) " + tempF.toFixed(2));
 
-                    var tempFdiv = $("<div>")
+                    var tempDiv = $("<div>")
                         .addClass("tempF")
                         .text(tempF.toFixed(2) + " Temperature (F)");
-                    console.log("tempFdiv " + tempFdiv);
+                    console.log("tempDiv " + tempDiv);
                 }
             });
     }
 
     function init() {
-        // Get stored cities from localStorage - parsing the JSON to the array
 
         var storedCities = JSON.parse(localStorage.getItem("storedCities"));
 
-        // If Cities were retrieved from localStorage, update the Cities array
         if (storedCities !== null) {
             cities = storedCities;
 
@@ -278,7 +241,6 @@ $(document).ready(function () {
     }
 
     function storeCities() {
-        // Stringify and set localStorage to Cities array and last city searched
 
         localStorage.setItem("storedCities", JSON.stringify(cities));
         localStorage.setItem("lastCity", JSON.stringify(cityEntered));
